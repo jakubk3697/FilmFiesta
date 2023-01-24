@@ -12,5 +12,4 @@ I created initial layout on the Miro platform. I would like the application to i
 - **Sign In** - in the future, I'd like to create the ability to create an account and add videos to my own library
 - **Video matching** - when the user adds a movie to the library, it will be taken into account the next time the movie is matched after answering the questions
 ## Miro table
-Below you can take see actual layout on Miro table
-<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVPxc1zls=/?moveToViewport=-927,-1866,1918,932&embedId=833767332866" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+Visit **[FilmFiesta](https://miro.com/app/live-embed/uXjVPxc1zls=/?moveToViewport=-927,-1866,1918,932&embedId=833767332866)** on Miro table. Layout and some ideas may change :wink:
