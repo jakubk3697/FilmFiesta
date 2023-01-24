@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
-import style from './SearchBar.module.scss';
 
-function SearchBar() {
+
+export const SearchBar = () => {
     const [search, setSearch] = useState('');
     return (
         <>
