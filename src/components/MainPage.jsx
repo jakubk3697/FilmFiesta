@@ -1,6 +1,9 @@
 export const MainPage = () => {
     return (
-        <div>
-        </div>
+        <>
+            {/* CARD */}
+            {/* CARD */}
+            {/* CARD */}
+        </>
     )
 }

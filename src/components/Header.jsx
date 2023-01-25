@@ -1,6 +1,6 @@
-import { BiCameraMovie } from 'react-icons/bi'
-import { AiFillGithub } from 'react-icons/ai'
-import styles from '../assets/styles/Header.module.css'
+import { BiCameraMovie } from 'react-icons/bi';
+import { AiFillGithub } from 'react-icons/ai';
+import styles from '../assets/styles/Header.module.css';
 
 export const Header = () => {
     return (
