@@ -1,5 +1,10 @@
+html {
+    font-size: 10px;
+}
+
 body {
-    /* background-image: url('../../assets/images/cinema_background.jpg'); */
+    background-image: url('../../assets/images/cinema_background.jpg');
+    font-family: 'Roboto', sans-serif;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
