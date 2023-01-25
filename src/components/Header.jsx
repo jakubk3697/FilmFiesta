@@ -1,7 +1,6 @@
 import { BiCameraMovie } from 'react-icons/bi'
 import { AiFillGithub } from 'react-icons/ai'
 import styles from '../assets/styles/Header.module.css'
-import Form from 'react-bootstrap/Form';
 
 export const Header = () => {
     return (
