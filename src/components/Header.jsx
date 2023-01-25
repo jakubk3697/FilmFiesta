@@ -1,20 +1,24 @@
 import { BiCameraMovie } from 'react-icons/bi'
 import { AiFillGithub } from 'react-icons/ai'
-import Button from '@mui/material/Button';
 import styles from '../assets/styles/Header.module.css'
+import Form from 'react-bootstrap/Form';
 
 export const Header = () => {
     return (
-        <header>
-            <div>
-                <BiCameraMovie />
-                <h1>FilmFiesta</h1>
+        <header className={styles.header}>
+            <div className={styles.leftAreaBox}>
+                <BiCameraMovie className={styles.logoIcon} />
+                <h1 className={styles.logoText}>FilmFiesta</h1>
             </div>
-            <div>
-                <AiFillGithub />
-                <button>Sign In</button>
+            <div className={styles.rightAreaBox}>
+                <a href="#" className={styles.githubLink}>
+                    <AiFillGithub className={styles.githubIcon} />
+                </a>
+                <label className={styles.switch}>
+                    <input type="checkbox" />
+                    <span className={styles.slider}></span>
+                </label>
             </div>
-
-        </header >
+        </header>
     )
 }
