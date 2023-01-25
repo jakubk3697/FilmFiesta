@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import styles from '../assets/styles/SearchBar.module.css';
+import styles from '../assets/styles/RandomQuestions.module.css';
 
 const questions = {
     "horror": ["Do you like beeing scary?", "Are you a fan of movies that have a strong emotional impact?"],
@@ -10,7 +10,7 @@ const questions = {
     "comedy": ["Do you like to laugh?", "Do you like to watch movies that make you laugh?", "Do you want to cheer up now?"],
 };
 
-export function SearchBar() {
+export function RandomQuestions() {
     const [randomQuestions, setRandomQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
 
@@ -36,6 +36,7 @@ export function SearchBar() {
 
     const handleChoice = (e) => {
         e.preventDefault();
+        console.log(answers);
         /* Trigger proper categories of films including answers and sort them by rating/popularity */
     };
 
@@ -55,4 +56,4 @@ export function SearchBar() {
         </div >
     );
 }
-export default SearchBar;
+export default RandomQuestions;
