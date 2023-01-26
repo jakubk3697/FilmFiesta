@@ -2,6 +2,7 @@
     --yesBtn: #007700;
     --noBtn: #770000;
     --submitBtn: #ffffff;
+    --errText: #ed0909;
 }
 
 .container {
@@ -55,4 +56,11 @@
     margin-top: 1.2rem;
     margin-bottom: .2rem;
     font-size: 1.5rem;
+}
+
+.errInfo {
+    font-size: 1.5rem;
+    color: var(--errText);
+    text-shadow: 1px 1px 1px #000;
+    margin-top: 1rem;
 }
