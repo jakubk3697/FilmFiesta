@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { StyledEngineProvider } from '@mui/material/styles';
 import styles from '../assets/styles/RandomQuestions.module.css';
+import { Button } from '@mui/material';
 
 const questions = {
     "horror": ["Do you like beeing scary?", "Are you a fan of movies that have a strong emotional impact?"],
@@ -15,6 +17,7 @@ export function RandomQuestions() {
     const [answers, setAnswers] = useState({});
 
     const getRandomQuestions = () => {
+        setAnswers({});
         let tempQuestions = { ...questions };
         let randomQuestions = [];
         for (let key in tempQuestions) {
@@ -41,19 +44,47 @@ export function RandomQuestions() {
     };
 
     return (
-        <div>
-            {randomQuestions.length ? <form>
-                {randomQuestions.map((question, index) => (
-                    <div key={index} >
-                        <p>{question.question}</p>
-                        <button onClick={(e) => handleYesClick(e, question.question, question.category)}>Yes</button>
-                        <button onClick={(e) => handleNoClick(e, question.question, question.category)}>No</button>
-                    </div>
-                ))
-                }
-                <button onClick={(e) => handleChoice(e)}>Submit</button>
-            </form> : <button onClick={getRandomQuestions}>Get Random Questions</button>}
-        </div >
+        <StyledEngineProvider injectFirst>
+            <div className={styles.container}>
+
+                <button
+                    className={`${styles.btn} ${styles.getBtn}`}
+                    onClick={getRandomQuestions}
+                >
+                    Get Random Questions
+                </button>
+
+                <form className={styles.form}>
+                    {randomQuestions.map((question, index) => (
+                        <div className={styles.formElem} key={index} onClick={(e) => hideFormElem(e)}>
+                            <p className={styles.question}>{question.question}</p>
+                            <button
+                                className={`${styles.btn} ${styles.yesBtn}`}
+                                data-type="yes"
+                                onClick={(e) => handleYesClick(e, question.question, question.category)}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                className={`${styles.btn} ${styles.noBtn}`}
+                                data-type="no"
+                                onClick={(e) => handleNoClick(e, question.question, question.category)}
+                            >
+                                No
+                            </button>
+                        </div>
+
+                    ))
+                    }
+                    <button
+                        className={`${styles.btn} ${styles.submitBtn}`}
+                        onClick={(e) => handleChoice(e)}
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div >
+        </StyledEngineProvider >
     );
 }
 export default RandomQuestions;
