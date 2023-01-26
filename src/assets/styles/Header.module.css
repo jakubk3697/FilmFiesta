@@ -6,6 +6,7 @@
     align-items: center;
     padding: 1rem 2rem;
     color: #fff;
+    margin-bottom: 4rem;
 }
 
 .leftAreaBox {
@@ -20,11 +21,18 @@
 }
 
 .logoIcon {
-    font-size: 6rem;
+    font-size: 4rem;
+}
+
+.logoText {
+    letter-spacing: 2px;
+    font-size: 2.6rem;
+    font-weight: bold;
+    margin-left: 1rem;
 }
 
 .githubIcon {
-    font-size: 4.5rem;
+    font-size: 4rem;
 }
 
 .githubLink {
@@ -39,12 +47,6 @@
     opacity: 0.9;
 }
 
-.logoText {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-left: 2rem;
-}
-
 .rightAreaBox {
     display: flex;
     align-items: center;
@@ -57,7 +59,7 @@
     display: inline-block;
     width: 3.5em;
     height: 1em;
-    margin-left: 2rem;
+    padding-left: 2rem;
 }
 
 /* Hide default HTML checkbox */
@@ -74,6 +76,7 @@
     display: inline-block;
     width: 3.5em;
     height: 2em;
+    margin-left: 1rem;
 }
 
 /* Hide default HTML checkbox */

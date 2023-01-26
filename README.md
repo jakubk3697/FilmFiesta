@@ -5,7 +5,7 @@ Very often I'd like to watch a movie but I have no specific ideas about genre, a
 
 ## Idea
 I created initial layout on the Miro platform. I would like the application to include
-- **Searchbar** - you have to answer for few questions and you'll have ten films matched by your answers. You can check actual questions list in yellow note on Miro table layout. The current idea is that each answer eliminates certain film genres or includes them, and at the end returns the ten most rated films .
+- **RandomQuestions** - you have to answer for few questions and you'll have films matched by your answers. You can check actual questions list in yellow note on Miro table layout. The current idea is that each answer eliminates certain film genres or includes them, and at the end returns the ten most rated films in this categories.
 - **Menu with categories** - options to choose categories of films which we want to watch. 
 - **Cards including film details** - 
 #### Later plans

@@ -1,14 +1,16 @@
 import { Header } from './Header';
-import { SearchBar } from './SearchBar';
+import { RandomQuestions } from './RandomQuestions';
 import { MainPage } from './MainPage';
 import { Footer } from './Footer';
+import Container from '@mui/material/Container';
+
 
 function App() {
   return (
     <>
       <Header />
       <MainPage />
-      <SearchBar />
+      <RandomQuestions />
       <Footer />
     </>
   )

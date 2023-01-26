@@ -1,0 +1,66 @@
+:root {
+    --yesBtn: #007700;
+    --noBtn: #770000;
+    --submitBtn: #ffffff;
+    --errText: #ed0909;
+}
+
+.container {
+    text-align: center;
+    line-height: 1.2;
+}
+
+.formElem.hide {
+    display: none;
+}
+
+.btn {
+    font-size: 1.6rem;
+    padding: .8rem 1.5rem;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: opacity .2s ease-in-out;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.getBtn {
+    border: 1px solid #fff;
+    letter-spacing: 2px;
+    color: #fff;
+    background-color: transparent;
+    text-transform: uppercase;
+}
+
+.yesBtn {
+    border: 2px solid var(--yesBtn);
+    margin-right: 1rem;
+}
+
+.noBtn {
+    border: 2px solid var(--noBtn);
+}
+
+.submitBtn {
+    margin-top: 1rem;
+    border: 1px solid var(--submitBtn);
+    letter-spacing: 1px;
+    font-size: 1.8rem;
+}
+
+.question {
+    margin-top: 1.2rem;
+    margin-bottom: .2rem;
+    font-size: 1.5rem;
+}
+
+.errInfo {
+    font-size: 1.5rem;
+    color: var(--errText);
+    text-shadow: 1px 1px 1px #000;
+    margin-top: 1rem;
+}
