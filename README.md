@@ -15,4 +15,4 @@ I created initial layout on the Miro platform. I would like the application to i
 Visit **[FilmFiesta](https://miro.com/app/live-embed/uXjVPxc1zls=/?moveToViewport=-927,-1866,1918,932&embedId=833767332866)** on Miro table. Layout and some ideas may change :wink:
 
 ## Live (in progress)
-👉https://filmfiesta.netlify.app👈
+🔍 **[FilmFiesta](https://filmfiesta.netlify.app/)**
