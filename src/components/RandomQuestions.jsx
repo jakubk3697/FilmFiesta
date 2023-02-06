@@ -29,7 +29,7 @@ export function RandomQuestions() {
         }
         setRandomQuestions(randomQuestions);
     };
-
+    
     const handleYesClick = (e, question, category) => {
         e.preventDefault();
         setAnswers({ ...answers, [category]: true });
