@@ -3,13 +3,7 @@ import { BiCameraMovie } from 'react-icons/bi';
 import { AiFillGithub } from 'react-icons/ai';
 import styles from '../assets/styles/Header.module.css';
 
-export const Header = () => {
-    const [isDarkMode, setIsDarkMode] = useState(true);
-
-    const handleDarkMode = () => {
-        setIsDarkMode(!isDarkMode);
-    }
-
+export const Header = ({handleTheme}) => {
     return (
         <header className={styles.header}>
             <div className={styles.leftAreaBox}>
@@ -21,7 +15,7 @@ export const Header = () => {
                     <AiFillGithub className={styles.githubIcon} />
                 </a>
                 <label className={styles.switch}>
-                    <input type="checkbox" value={isDarkMode} onChange={handleDarkMode} />
+                    <input type="checkbox" onChange={handleTheme} />
                     <span className={styles.slider}></span>
                 </label>
             </div>
