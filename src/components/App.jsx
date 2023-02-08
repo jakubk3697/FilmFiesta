@@ -4,9 +4,9 @@ import { MainPage } from './MainPage';
 import { Footer } from './Footer';
 import Container from '@mui/material/Container';
 import { ThemeContext } from '../contexts/ThemeContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function App() {
+const App = () => {
   const [theme, setTheme] = useState('dark');
 
   const handleTheme = () => {

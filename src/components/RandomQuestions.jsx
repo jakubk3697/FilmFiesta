@@ -12,7 +12,7 @@ const questions = {
     "comedy": ["Do you like to laugh?", "Do you like to watch movies that make you laugh?", "Do you want to cheer up now?"],
 };
 
-export function RandomQuestions() {
+export const RandomQuestions = () => {
     const [randomQuestions, setRandomQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
     const [answered, setAnswered] = useState([]);
