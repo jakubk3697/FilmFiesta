@@ -4,6 +4,7 @@ import { MainPage } from './MainPage';
 import { Footer } from './Footer';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { useState, useEffect } from 'react';
+import styles from '../assets/styles/App.module.css'
 
 const App = () => {
   const [theme, setTheme] = useState('dark');
@@ -14,10 +15,12 @@ const App = () => {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <Header handleTheme={handleTheme} />
-      <RandomQuestions />
-      <MainPage />
-      <Footer />
+      <div className={styles.container}>
+        <Header handleTheme={handleTheme} />
+        <RandomQuestions />
+        <MainPage />
+      </div>
+        <Footer />
     </ThemeContext.Provider>
   )
 }

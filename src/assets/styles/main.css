@@ -5,6 +5,7 @@ html {
 }
 
 body {
+    position: relative;
     background-image: url('../../assets/images/cinema_background.jpg');
     font-family: 'Roboto', sans-serif;
     background-size: cover;
@@ -12,12 +13,4 @@ body {
     background-attachment: fixed;
     background-position: center;
     color: #fff;
-}
-
-#root {
-    position: relative;
-    min-height: 100vh;
-    max-width: 1000px;
-    padding: 2rem;
-    margin: 0 auto;
 }
