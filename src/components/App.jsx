@@ -2,7 +2,6 @@ import { Header } from './Header';
 import { RandomQuestions } from './RandomQuestions';
 import { MainPage } from './MainPage';
 import { Footer } from './Footer';
-import Container from '@mui/material/Container';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { useState, useEffect } from 'react';
 
@@ -16,8 +15,8 @@ const App = () => {
   return (
     <ThemeContext.Provider value={theme}>
       <Header handleTheme={handleTheme} />
-      <MainPage />
       <RandomQuestions />
+      <MainPage />
       <Footer />
     </ThemeContext.Provider>
   )

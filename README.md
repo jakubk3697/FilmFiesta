@@ -1,7 +1,8 @@
 # 🎥FilmFiesta
 
-## 📍Problem to solve
-Very often I'd like to watch a movie but I have no specific ideas about genre, actors or year of the film. I was looking for an app where I could answer some out-of-the-box questions, about my mood, some thoughts etc. and be able to easily get 10 movies that would match my answers.
+
+## Problem to solve
+Very often I'd like to watch a movie but I have no specific ideas about genre, actors or year of the film. I was looking for an app where I could answer some out-of-the-box questions, about my mood, some thoughts etc. and be able to easily get movies that would match my answers.
 
 ## 💡Idea
 I created initial layout on the Miro platform. I would like the application to include

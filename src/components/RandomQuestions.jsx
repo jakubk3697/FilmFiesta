@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyledEngineProvider } from '@mui/material/styles';
 import styles from '../assets/styles/RandomQuestions.module.css';
-import { Button } from '@mui/material';
 
 const questions = {
     "horror": ["Do you like beeing scary?", "Are you a fan of movies that have a strong emotional impact?"],
@@ -50,9 +48,7 @@ export const RandomQuestions = () => {
     };
 
     return (
-        <StyledEngineProvider injectFirst>
             <div className={styles.container}>
-
                 <button
                     className={`${styles.btn} ${styles.getBtn}`}
                     onClick={getRandomQuestions}
@@ -93,7 +89,6 @@ export const RandomQuestions = () => {
                     </button>
                 </form>
             </div >
-        </StyledEngineProvider >
     );
 }
 export default RandomQuestions;
