@@ -12,8 +12,8 @@ export const MainPage = () => {
         queryFn: () => getMovies('harry potter'),
     });
 
-    if (moviesQuery.isLoading) return <h2>Loading...</h2>;
-    if (moviesQuery.isError) return <pre>{JSON.stringify(moviesQuery.error)}</pre>
+    if (moviesQuery.isLoading) return <p>Loading...</p>;
+    if (moviesQuery.isError) return <p>Error: {error.message}</p>;
 
     return (
         <main className={styles.container}>

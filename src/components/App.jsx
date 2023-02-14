@@ -19,8 +19,8 @@ const App = () => {
         <Header handleTheme={handleTheme} />
         <RandomQuestions />
         <MainPage />
-        <Footer />
       </div>
+        <Footer />
     </ThemeContext.Provider>
   )
 }
