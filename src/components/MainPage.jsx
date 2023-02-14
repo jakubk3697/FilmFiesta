@@ -3,50 +3,34 @@ import { ThemeContext } from '../contexts/ThemeContext';
 import { getMovies } from '../api/moviedbAPI';
 import { MovieCard } from './elements/MovieCard';
 import styles from '../assets/styles/MainPage.module.css'
+import { useQuery } from '@tanstack/react-query';
 
 export const MainPage = () => {
-    const [movies, setMovies] = useState([]);
+    const [title, setTitle] = useState();
+    const moviesQuery = useQuery({
+        queryKey: ['movies'],
+        queryFn: () => getMovies('harry potter'),
+    });
 
-    useEffect(() => {
-        let abortFetching = false;
-        const startFetching = async () => {
-            const movies = await getMovies("popular");
-            !abortFetching && setMovies(movies);
-        }
-        startFetching();
-
-        return () => {
-            abortFetching = true;
-        }
-    }, []);
-
-    const renderMovies = () => {
-        console.log(movies);
-        return movies.map(movie => {
-            return (
-                <MovieCard
-                    title={movie.title}
-                    imgSrc={movie.poster_path}
-                    genres={movie.genres}
-                    rating={movie.vote_average}
-                />
-            )
-        })
-    }
+    if (moviesQuery.isLoading) return <h2>Loading...</h2>;
+    if (moviesQuery.isError) return <pre>{JSON.stringify(moviesQuery.error)}</pre>
 
     return (
         <main className={styles.container}>
+            {moviesQuery.data.map((movie) => {
                 
-              <MovieCard
-                title="Example film title"
-                imgSrc="https://image.tmdb.org/t/p/w200/3CCSa2CjQRMgwllMnVd0Gv9FZaW.jpg"
-                genres="Example film genres"
-                rating="5.2"
-                handleMovieCardClick={() => console.log("clicked")}
-            />
-            {/* <div className={styles.movies}>
-                {renderMovies()}
-            </div> */}
+                return (
+                    <MovieCard
+                        key={movie.id}
+                        title={movie.title}
+                        imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
+                        imgAlt={movie.title}
+                        genres={movie.genre_ids}
+                        rating={movie.vote_average}
+                        handleMovieCardClick={() => console.log("clicked")}
+                    />
+                )
+            })}
         </main>
     )
 }

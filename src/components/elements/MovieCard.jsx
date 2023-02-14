@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from '../../assets/styles/elements/MovieCard.module.css';
 
-export const MovieCard = ({ title, imgSrc, genres, rating, handleMovieCardClick }) => {
+export const MovieCard = ({ title, imgSrc, imgAlt, genres, rating, handleMovieCardClick }) => {
     return (
         <div onClick={handleMovieCardClick} className={styles.card}>
             <div className={styles.topSection}>
-                <img className={styles.img} src={imgSrc} />
+                <img className={styles.img} src={imgSrc} alt={imgAlt}/>
                 <p className={styles.ratingBox}>
-                    <span className={styles.rating}>{rating}</span>
+                    <span className={styles.rating}>{rating.toFixed(1)}</span>
                 </p>
             </div>
             <div className={styles.bottomSection}>
