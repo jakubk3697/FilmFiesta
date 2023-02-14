@@ -25,23 +25,8 @@ export const MainPage = () => {
         <main className={styles.container}>
             <MovieCard
                 title="Example film title"
-                textBody="Example film description"
-                btnName="Example button name"
-            />
-            <MovieCard
-                title="Example film title"
-                textBody="Example film description"
-                btnName="Example button name"
-            />
-            <MovieCard
-                title="Example film title"
-                textBody="Example film description"
-                btnName="Example button name"
-            />
-            <MovieCard
-                title="Example film title"
-                textBody="Example film description"
-                btnName="Example button name"
+                genres="Action, Adventure, Fantasy"
+                rating={5.4}
             />
             {/* CARD */}
             {/* CARD */}
