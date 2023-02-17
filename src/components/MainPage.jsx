@@ -1,24 +1,72 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
-import { getMovies } from '../api/moviedbAPI';
 import { MovieCard } from './elements/MovieCard';
+import { MainNavbar } from './elements/MainNavbar';
 import styles from '../assets/styles/MainPage.module.css'
+import {
+    getPopularMovies,
+    getTopRatedMovies,
+    getNowPlayingMovies,
+    getUpcomingMovies,
+} from '../api/moviedbAPI';
 import { useQuery } from '@tanstack/react-query';
 
 export const MainPage = () => {
-    const [title, setTitle] = useState();
-    const moviesQuery = useQuery({
-        queryKey: ['movies'],
-        queryFn: () => getMovies('harry potter'),
-    });
+    const [movieType, setMovieType] = useState('popular');
 
-    if (moviesQuery.isLoading) return <p>Loading...</p>;
-    if (moviesQuery.isError) return <p>Error: {error.message}</p>;
+    let queryFn;
+    let queryKey;
+
+    switch (movieType) {
+        case 'popular':
+            queryFn = getPopularMovies;
+            queryKey = ['popularMovies'];
+            break;
+        case 'top_rated':
+            queryFn = getTopRatedMovies;
+            queryKey = ['topRatedMovies'];
+            break;
+        case 'now_playing':
+            queryFn = getNowPlayingMovies;
+            queryKey = ['nowPlayingMovies'];
+            break;
+        case 'upcoming':
+            queryFn = getUpcomingMovies;
+            queryKey = ['upcomingMovies'];
+            break;
+        default:
+            queryFn = getPopularMovies;
+            queryKey = ['popularMovies'];
+            break;
+    }
+
+    const { isLoading, error, data } = useQuery(queryKey, queryFn);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    const handleMovieTypeClick = (e, type) => {
+        e.preventDefault();
+        setMovieType(type)
+    }
+
 
     return (
         <main className={styles.container}>
-            {moviesQuery.data.map((movie) => {
-                
+            <MainNavbar
+                links={[
+                    { title: "Popular", url: "#", onClick: (e) => handleMovieTypeClick(e, 'popular') },
+                    { title: "Top Rated", url: "#", onClick: (e) => handleMovieTypeClick(e, 'top_rated') },
+                    { title: "Now Playing", url: "#", onClick: (e) => handleMovieTypeClick(e, 'now_playing') },
+                    { title: "Upcoming", url: "#", onClick: (e) => handleMovieTypeClick(e, 'upcoming') },
+                ]}
+            />
+            {data.results.map((movie) => {
                 return (
                     <MovieCard
                         key={movie.id}
@@ -27,7 +75,7 @@ export const MainPage = () => {
                         imgAlt={movie.title}
                         genres={movie.genre_ids}
                         rating={movie.vote_average}
-                        handleMovieCardClick={() => console.log("clicked")}
+                        handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
                     />
                 )
             })}
