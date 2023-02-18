@@ -4,7 +4,7 @@ import { MainPage } from './MainPage';
 import { Footer } from './Footer';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { useState, useEffect } from 'react';
-import styles from '../assets/styles/App.module.css'
+import styles from '../assets/styles/App.module.scss';
 
 const App = () => {
   const [theme, setTheme] = useState('dark');
@@ -20,7 +20,7 @@ const App = () => {
         <RandomQuestions />
         <MainPage />
       </div>
-        <Footer />
+      <Footer />
     </ThemeContext.Provider>
   )
 }

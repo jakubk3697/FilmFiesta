@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { MovieCard } from './elements/MovieCard';
 import { MainNavbar } from './elements/MainNavbar';
-import styles from '../assets/styles/MainPage.module.css'
+import styles from '../assets/styles/MainPage.module.scss'
 import {
     getPopularMovies,
     getTopRatedMovies,
@@ -55,30 +55,34 @@ export const MainPage = () => {
         setMovieType(type)
     }
 
-
     return (
-        <main className={styles.container}>
-            <MainNavbar
-                links={[
-                    { title: "Popular", url: "#", onClick: (e) => handleMovieTypeClick(e, 'popular') },
-                    { title: "Top Rated", url: "#", onClick: (e) => handleMovieTypeClick(e, 'top_rated') },
-                    { title: "Now Playing", url: "#", onClick: (e) => handleMovieTypeClick(e, 'now_playing') },
-                    { title: "Upcoming", url: "#", onClick: (e) => handleMovieTypeClick(e, 'upcoming') },
-                ]}
-            />
-            {data.results.map((movie) => {
-                return (
-                    <MovieCard
-                        key={movie.id}
-                        title={movie.title}
-                        imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
-                        imgAlt={movie.title}
-                        genres={movie.genre_ids}
-                        rating={movie.vote_average}
-                        handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
-                    />
-                )
-            })}
-        </main>
+        <>
+            <main className={styles.main}>
+                <MainNavbar
+                    className={styles.navbar}
+                    links={[
+                        { title: "Popular", url: "#", onClick: (e) => handleMovieTypeClick(e, 'popular') },
+                        { title: "Top Rated", url: "#", onClick: (e) => handleMovieTypeClick(e, 'top_rated') },
+                        { title: "Now Playing", url: "#", onClick: (e) => handleMovieTypeClick(e, 'now_playing') },
+                        { title: "Upcoming", url: "#", onClick: (e) => handleMovieTypeClick(e, 'upcoming') },
+                    ]}
+                />
+                <div className={styles.container}>
+                    {data.results.map((movie) => {
+                        return (
+                            <MovieCard
+                                key={movie.id}
+                                title={movie.title}
+                                imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
+                                imgAlt={movie.title}
+                                genres={movie.genre_ids}
+                                rating={movie.vote_average}
+                                handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
+                            />
+                        )
+                    })}
+                </div>
+            </main>
+        </>
     )
 }

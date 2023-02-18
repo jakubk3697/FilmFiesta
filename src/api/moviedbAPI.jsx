@@ -12,7 +12,6 @@ export const getPopularMovies = async () => {
             language: 'en-US',
         },
     });
-    console.log(response);
     return response.data;
 };
 

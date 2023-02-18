@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BiCameraMovie } from 'react-icons/bi';
 import { AiFillGithub } from 'react-icons/ai';
-import styles from '../assets/styles/Header.module.css';
+import styles from '../assets/styles/Header.module.scss';
 
-export const Header = ({handleTheme}) => {
+export const Header = ({ handleTheme }) => {
     return (
         <header className={styles.header}>
             <div className={styles.leftAreaBox}>
