@@ -1,12 +1,14 @@
 import axios from "axios";
 
-const poster_path = "3CCSa2CjQRMgwllMnVd0Gv9FZaW.jpg"; // example poster path
-    
+// const API_ACTUAL_GENRES = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const API_KEY = import.meta.env.VITE_API_KEY;
-const API_BASE_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`;
+const BASE_URL = 'https://api.themoviedb.org/3/';
 
-export const getMovies = async (query) => {
-    const res = await axios.get(`${API_BASE_URL}${query}`);
+export const fetchMovies = async ({ queryKey }) => {
+    const [_key, { page, movieType }] = queryKey;
 
-    return res.data.results;
+    const url = `${BASE_URL}/movie/${movieType}?api_key=${API_KEY}&page=${page}`;
+    const { data } = await axios.get(url);
+
+    return data;
 };
