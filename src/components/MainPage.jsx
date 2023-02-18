@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { MovieCard } from './elements/MovieCard';
 import { MainNavbar } from './elements/MainNavbar';
+import { Loading } from './elements/Loading';
 import styles from '../assets/styles/MainPage.module.scss'
 import { fetchMovies } from '../api/moviedbAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -25,8 +26,8 @@ export const MainPage = () => {
         getNextPageParam: (lastPage) => lastPage.page + 1,
     });
 
-    if (error) return <div>Error: {error.message}</div>;
-    if (!data) return <div>Loading...</div>;
+    if (error) return alert(error.message);
+    if (!data) return <Loading />;
 
     const movieData = data.pages.flatMap((page) => page.results);
 
