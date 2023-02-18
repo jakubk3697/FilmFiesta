@@ -3,52 +3,33 @@ import { ThemeContext } from '../contexts/ThemeContext';
 import { MovieCard } from './elements/MovieCard';
 import { MainNavbar } from './elements/MainNavbar';
 import styles from '../assets/styles/MainPage.module.scss'
-import {
-    getPopularMovies,
-    getTopRatedMovies,
-    getNowPlayingMovies,
-    getUpcomingMovies,
-} from '../api/moviedbAPI';
-import { useQuery } from '@tanstack/react-query';
+import { fetchMovies } from '../api/moviedbAPI';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 export const MainPage = () => {
     const [movieType, setMovieType] = useState('popular');
 
-    let queryFn;
-    let queryKey;
-
-    switch (movieType) {
-        case 'popular':
-            queryFn = getPopularMovies;
-            queryKey = ['popularMovies'];
-            break;
-        case 'top_rated':
-            queryFn = getTopRatedMovies;
-            queryKey = ['topRatedMovies'];
-            break;
-        case 'now_playing':
-            queryFn = getNowPlayingMovies;
-            queryKey = ['nowPlayingMovies'];
-            break;
-        case 'upcoming':
-            queryFn = getUpcomingMovies;
-            queryKey = ['upcomingMovies'];
-            break;
-        default:
-            queryFn = getPopularMovies;
-            queryKey = ['popularMovies'];
-            break;
+    // Initial fetch strucutre with page 1
+    const fetchProjects = async ({ pageParam = 1 }) => {
+        const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
+        return response;
     }
 
-    const { isLoading, error, data } = useQuery(queryKey, queryFn);
+    const {
+        data,
+        error,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchProjects, {
+        getNextPageParam: (lastPage) => lastPage.page + 1,
+    });
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    if (error) return <div>Error: {error.message}</div>;
+    if (!data) return <div>Loading...</div>;
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+    const movieData = data.pages.flatMap((page) => page.results);
+
 
     const handleMovieTypeClick = (e, type) => {
         e.preventDefault();
@@ -68,7 +49,7 @@ export const MainPage = () => {
                     ]}
                 />
                 <div className={styles.container}>
-                    {data.results.map((movie) => {
+                    {movieData.map((movie) => {
                         return (
                             <MovieCard
                                 key={movie.id}
@@ -82,6 +63,20 @@ export const MainPage = () => {
                         )
                     })}
                 </div>
+                <div>
+                    <button
+                        className={styles.loadMoreButton}
+                        onClick={() => fetchNextPage()}
+                        disabled={!hasNextPage || isFetchingNextPage}
+                    >
+                        {isFetchingNextPage
+                            ? 'Loading more...'
+                            : hasNextPage
+                                ? 'Load More'
+                                : 'Nothing more to load'}
+                    </button>
+                </div>
+
             </main>
         </>
     )

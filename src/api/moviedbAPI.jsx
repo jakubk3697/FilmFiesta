@@ -4,43 +4,11 @@ import axios from "axios";
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3/';
 
+export const fetchMovies = async ({ queryKey }) => {
+    const [_key, { page, movieType }] = queryKey;
 
-export const getPopularMovies = async () => {
-    const response = await axios.get(`${BASE_URL}/movie/popular`, {
-        params: {
-            api_key: API_KEY,
-            language: 'en-US',
-        },
-    });
-    return response.data;
-};
+    const url = `${BASE_URL}/movie/${movieType}?api_key=${API_KEY}&page=${page}`;
+    const { data } = await axios.get(url);
 
-export const getTopRatedMovies = async () => {
-    const response = await axios.get(`${BASE_URL}/movie/top_rated`, {
-        params: {
-            api_key: API_KEY,
-            language: 'en-US',
-        },
-    });
-    return response.data;
-};
-
-export const getNowPlayingMovies = async () => {
-    const response = await axios.get(`${BASE_URL}/movie/now_playing`, {
-        params: {
-            api_key: API_KEY,
-            language: 'en-US',
-        },
-    });
-    return response.data;
-};
-
-export const getUpcomingMovies = async () => {
-    const response = await axios.get(`${BASE_URL}/movie/upcoming`, {
-        params: {
-            api_key: API_KEY,
-            language: 'en-US',
-        },
-    });
-    return response.data;
+    return data;
 };
