@@ -22,22 +22,49 @@ export const MainPage = () => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
+        status,
     } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchProjects, {
         getNextPageParam: (lastPage) => lastPage.page + 1,
     });
-
-    if (error) return alert(error.message);
-    if (!data) return <Loading />;
-
-    const movieData = data.pages.flatMap((page) => page.results);
-
 
     const handleMovieTypeClick = (e, type) => {
         e.preventDefault();
         setMovieType(type)
     }
 
+    const renderMovies = () => {
+        switch (status) {
+            case 'error':
+                return console.error(error)
+                break;
+            case 'loading':
+                return <Loading />
+                break;
+            case 'success':
+                const movieData = data.pages.flatMap((page) => page.results);
+                return (
+                    movieData.map((movie) => {
+                        return (
+                            <MovieCard
+                                key={movie.id}
+                                title={movie.title}
+                                imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
+                                imgAlt={movie.title}
+                                genres={movie.genre_ids}
+                                rating={movie.vote_average}
+                                handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
+                            />
+                        )
+                    })
+                )
+                break;
+            default:
+                break;
+        }
+    }
+
     return (
+
         <>
             <main className={styles.main}>
                 <MainNavbar
@@ -50,19 +77,7 @@ export const MainPage = () => {
                     ]}
                 />
                 <div className={styles.container}>
-                    {movieData.map((movie) => {
-                        return (
-                            <MovieCard
-                                key={movie.id}
-                                title={movie.title}
-                                imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
-                                imgAlt={movie.title}
-                                genres={movie.genre_ids}
-                                rating={movie.vote_average}
-                                handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
-                            />
-                        )
-                    })}
+                    {renderMovies()}
                 </div>
                 <div>
                     <button
