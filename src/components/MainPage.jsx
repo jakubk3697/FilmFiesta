@@ -40,10 +40,10 @@ export const MainPage = () => {
                 <MainNavbar
                     className={styles.navbar}
                     links={[
-                        { title: "Popular", url: "popular", onClick: (e) => handleMovieTypeClick('popular') },
-                        { title: "Top Rated", url: "top_rated", onClick: (e) => handleMovieTypeClick('top_rated') },
-                        { title: "Now Playing", url: "now_playing", onClick: (e) => handleMovieTypeClick('now_playing') },
-                        { title: "Upcoming", url: "upcoming", onClick: (e) => handleMovieTypeClick('upcoming') },
+                        { title: "Popular", url: "popular", onClick: () => handleMovieTypeClick('popular') },
+                        { title: "Top Rated", url: "top_rated", onClick: () => handleMovieTypeClick('top_rated') },
+                        { title: "Now Playing", url: "now_playing", onClick: () => handleMovieTypeClick('now_playing') },
+                        { title: "Upcoming", url: "upcoming", onClick: () => handleMovieTypeClick('upcoming') },
                     ]}
                 />
                 <div className={styles.container}>
