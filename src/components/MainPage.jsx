@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { ThemeContext } from '../contexts/ThemeContext';
-import { MovieCard } from './elements/MovieCard';
 import { MainNavbar } from './elements/MainNavbar';
-import { Loading } from './elements/Loading';
-import styles from '../assets/styles/MainPage.module.scss'
+import { MovieCards } from './MovieCards';
 import { fetchMovies } from '../api/moviedbAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router-dom';
+import styles from '../assets/styles/MainPage.module.scss'
 
 export const MainPage = () => {
     const [movieType, setMovieType] = useState('popular');
@@ -48,7 +46,7 @@ export const MainPage = () => {
                 />
                 <div className={styles.container}>
                     <Routes>
-                        <Route path="/movies/:movieGenre" element={<Movies movieData={movieData} status={status} />} />
+                        <Route path="/movies/:movieGenre" element={<MovieCards movieData={movieData} status={status} />} />
                     </Routes>
                 </div>
                 <div>
@@ -70,29 +68,3 @@ export const MainPage = () => {
     )
 }
 
-const Movies = ({ movieData, status }) => {
-    switch (status) {
-        case 'error':
-            return console.error(error)
-        case 'loading':
-            return <Loading />
-        case 'success':
-            return (
-                movieData.map((movie) => {
-                    return (
-                        <MovieCard
-                            key={movie.id}
-                            title={movie.title}
-                            imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
-                            imgAlt={movie.title}
-                            genres={movie.genre_ids}
-                            rating={movie.vote_average}
-                            handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
-                        />
-                    )
-                })
-            )
-        default:
-            return null;
-    }
-}
