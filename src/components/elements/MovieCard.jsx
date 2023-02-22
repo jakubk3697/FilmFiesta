@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from '../../assets/styles/elements/MovieCard.module.scss';
 
 export const MovieCard = ({ title, imgSrc, imgAlt, genres, rating, handleMovieCardClick }) => {

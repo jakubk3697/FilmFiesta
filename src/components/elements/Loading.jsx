@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from '../../assets/styles/elements/Loading.module.scss';
 
 export const Loading = () => {
