@@ -6,6 +6,7 @@ import { Loading } from './elements/Loading';
 import styles from '../assets/styles/MainPage.module.scss'
 import { fetchMovies } from '../api/moviedbAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { Route, Routes } from 'react-router';
 
 export const MainPage = () => {
     const [movieType, setMovieType] = useState('popular');
@@ -27,57 +28,28 @@ export const MainPage = () => {
         getNextPageParam: (lastPage) => lastPage.page + 1,
     });
 
-    const handleMovieTypeClick = (e, type) => {
-        e.preventDefault();
+    const handleMovieTypeClick = (type) => {
         setMovieType(type)
     }
 
-    const renderMovies = () => {
-        switch (status) {
-            case 'error':
-                return console.error(error)
-                break;
-            case 'loading':
-                return <Loading />
-                break;
-            case 'success':
-                const movieData = data.pages.flatMap((page) => page.results);
-                return (
-                    movieData.map((movie) => {
-                        return (
-                            <MovieCard
-                                key={movie.id}
-                                title={movie.title}
-                                imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
-                                imgAlt={movie.title}
-                                genres={movie.genre_ids}
-                                rating={movie.vote_average}
-                                handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
-                            />
-                        )
-                    })
-                )
-                break;
-            default:
-                break;
-        }
-    }
+    const movieData = data ? data.pages.flatMap((page) => page.results) : [];
 
     return (
-
         <>
             <main className={styles.main}>
                 <MainNavbar
                     className={styles.navbar}
                     links={[
-                        { title: "Popular", url: "#", onClick: (e) => handleMovieTypeClick(e, 'popular') },
-                        { title: "Top Rated", url: "#", onClick: (e) => handleMovieTypeClick(e, 'top_rated') },
-                        { title: "Now Playing", url: "#", onClick: (e) => handleMovieTypeClick(e, 'now_playing') },
-                        { title: "Upcoming", url: "#", onClick: (e) => handleMovieTypeClick(e, 'upcoming') },
+                        { title: "Popular", url: "popular", onClick: (e) => handleMovieTypeClick('popular') },
+                        { title: "Top Rated", url: "top_rated", onClick: (e) => handleMovieTypeClick('top_rated') },
+                        { title: "Now Playing", url: "now_playing", onClick: (e) => handleMovieTypeClick('now_playing') },
+                        { title: "Upcoming", url: "upcoming", onClick: (e) => handleMovieTypeClick('upcoming') },
                     ]}
                 />
                 <div className={styles.container}>
-                    {renderMovies()}
+                    <Routes>
+                        <Route path="/movies/:movieGenre" element={<Movies movieData={movieData} status={status} />} />
+                    </Routes>
                 </div>
                 <div>
                     <button
@@ -96,4 +68,31 @@ export const MainPage = () => {
             </main>
         </>
     )
+}
+
+const Movies = ({ movieData, status }) => {
+    switch (status) {
+        case 'error':
+            return console.error(error)
+        case 'loading':
+            return <Loading />
+        case 'success':
+            return (
+                movieData.map((movie) => {
+                    return (
+                        <MovieCard
+                            key={movie.id}
+                            title={movie.title}
+                            imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
+                            imgAlt={movie.title}
+                            genres={movie.genre_ids}
+                            rating={movie.vote_average}
+                            handleMovieCardClick={() => console.log("Openning new Route with movie details (not)works.")}
+                        />
+                    )
+                })
+            )
+        default:
+            return null;
+    }
 }

@@ -1,19 +1,19 @@
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from '../../assets/styles/elements/MainNavbar.module.scss';
 
-export const MainNavbar = ({ title, links, onClick }) => {
+export const MainNavbar = ({ links }) => {
     return (
         <nav className={styles.nav}>
             <ul className={styles.ul}>
                 {links.map((link, index) => (
-                    <li key={index} className={styles.li}>
-                        <a
+                    <li key={link.url} className={styles.li}>
+                        <NavLink
                             className={styles.a}
-                            href={link.url}
-                            onClick={(e) => link.onClick(e)}
+                            onClick={link.onClick}
+                            to={`/movies/${link.url}`}
                         >
                             {link.title}
-                        </a>
+                        </NavLink>
                     </li>
                 ))}
             </ul>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BiCameraMovie } from 'react-icons/bi';
 import { AiFillGithub } from 'react-icons/ai';
 import styles from '../assets/styles/Header.module.scss';
