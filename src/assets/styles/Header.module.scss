@@ -17,6 +17,12 @@
     transition: opacity 0.2s;
 }
 
+.Link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s, opacity 0.2s;
+}
+
 .leftAreaBox:hover {
     opacity: 0.9;
 }

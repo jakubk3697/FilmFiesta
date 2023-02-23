@@ -1,8 +1,8 @@
 import styles from '../../assets/styles/elements/MovieCard.module.scss';
 
-export const MovieCard = ({ title, imgSrc, imgAlt, genres, rating, handleMovieCardClick }) => {
+export const MovieCard = ({ title, imgSrc, imgAlt, genres, rating }) => {
     return (
-        <div onClick={handleMovieCardClick} className={styles.card}>
+        <div className={styles.card}>
             <div className={styles.topSection}>
                 <img className={styles.img} src={imgSrc} alt={imgAlt} />
                 <p className={styles.ratingBox}>

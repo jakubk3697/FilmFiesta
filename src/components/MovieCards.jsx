@@ -13,7 +13,7 @@ export const MovieCards = ({ movieData, status }) => {
             return (
                 movieData.map((movie) => {
                     return (
-                        <Link key={movie.id} className={styles.Link} to={`/${movie.id}`}>
+                        <Link key={movie.id} className={styles.Link} to={`/movie/${movie.id}`}>
                             <MovieCard
                                 key={movie.id}
                                 title={movie.title}
@@ -21,7 +21,6 @@ export const MovieCards = ({ movieData, status }) => {
                                 imgAlt={movie.title}
                                 genres={movie.genre_ids}
                                 rating={movie.vote_average}
-                                handleMovieCardClick={() => console.log(movie.id, 'clicked')}
                             />
                         </Link>
                     )

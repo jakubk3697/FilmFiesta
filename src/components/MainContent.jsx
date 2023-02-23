@@ -4,10 +4,11 @@ import { MovieCards } from './MovieCards';
 import { fetchMovies } from '../api/moviedbAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Route, Routes } from 'react-router-dom';
-import styles from '../assets/styles/MainPage.module.scss'
+import { RandomQuestions } from './RandomQuestions';
+import styles from '../assets/styles/MainContent.module.scss'
 
-export const MainPage = () => {
-    const [movieType, setMovieType] = useState('popular');
+export const MainContent = ({ type }) => {
+    const [movieType, setMovieType] = useState( 'popular');
 
     // Initial fetch strucutre with page 1
     const fetchProjects = async ({ pageParam = 1 }) => {
@@ -34,9 +35,9 @@ export const MainPage = () => {
 
     return (
         <>
+            <RandomQuestions />
             <main className={styles.main}>
                 <MainNavbar
-                    className={styles.navbar}
                     links={[
                         { title: "Popular", url: "popular", onClick: () => handleMovieTypeClick('popular') },
                         { title: "Top Rated", url: "top_rated", onClick: () => handleMovieTypeClick('top_rated') },
@@ -45,10 +46,7 @@ export const MainPage = () => {
                     ]}
                 />
                 <div className={styles.container}>
-                    <Routes>
-                        <Route exact path="/" element={<MovieCards movieData={movieData} status={status} />} />
-                        <Route exact path="/:movieGenre" element={<MovieCards movieData={movieData} status={status} />} />
-                    </Routes>
+                    <MovieCards movieData={movieData} status={status} />
                 </div>
                 <div>
                     <button
