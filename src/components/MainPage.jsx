@@ -46,6 +46,7 @@ export const MainPage = () => {
                 />
                 <div className={styles.container}>
                     <Routes>
+                        <Route path="/" element={<MovieCards movieData={movieData} status={status} />} />
                         <Route path="/movies/:movieGenre" element={<MovieCards movieData={movieData} status={status} />} />
                     </Routes>
                 </div>
