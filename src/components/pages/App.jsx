@@ -1,10 +1,11 @@
-import { Header } from './Header';
-import { RandomQuestions } from './RandomQuestions';
-import { MainPage } from './MainPage';
-import { Footer } from './Footer';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { Header } from '../Header';
+import { RandomQuestions } from '../RandomQuestions';
+import { Footer } from '../Footer';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { useState, useEffect } from 'react';
-import styles from '../assets/styles/App.module.scss';
+import styles from '../../assets/styles/pages/App.module.scss';
+import { Outlet } from 'react-router-dom';
+import { MainContent } from '../MainContent';
 
 const App = () => {
   const [theme, setTheme] = useState('dark');
@@ -17,8 +18,7 @@ const App = () => {
     <ThemeContext.Provider value={theme}>
       <div className={styles.container}>
         <Header handleTheme={handleTheme} />
-        <RandomQuestions />
-        <MainPage />
+        <Outlet />
       </div>
       <Footer />
     </ThemeContext.Provider>

@@ -12,7 +12,7 @@ export const MainNavbar = ({ links }) => {
                                 ({ isActive }) => isActive ? `${styles.navlink} ${styles.active}` : styles.navlink
                             }
                             onClick={link.onClick}
-                            to={`/${link.url}`}
+                            to={`/movies/${link.url}`}
                         >
                             {link.title}
                         </NavLink>
