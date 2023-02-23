@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API_ACTUAL_GENRES = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const API_KEY = import.meta.env.VITE_API_KEY;
+const API_ACTUAL_GENRES = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const BASE_URL = 'https://api.themoviedb.org/3/';
 
 export const fetchMovies = async ({ queryKey }) => {
@@ -12,3 +12,9 @@ export const fetchMovies = async ({ queryKey }) => {
 
     return data;
 };
+
+export const fetchGenres = async () => {
+    const { data } = await axios.get(API_ACTUAL_GENRES);
+
+    return data;
+}
