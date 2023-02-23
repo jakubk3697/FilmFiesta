@@ -8,9 +8,11 @@ export const MainNavbar = ({ links }) => {
                 {links.map((link, index) => (
                     <li key={link.url} className={styles.li}>
                         <NavLink
-                            className={styles.a}
+                            className={
+                                ({ isActive }) => isActive ? `${styles.navlink} ${styles.active}` : styles.navlink
+                            }
                             onClick={link.onClick}
-                            to={`/movies/${link.url}`}
+                            to={`/${link.url}`}
                         >
                             {link.title}
                         </NavLink>

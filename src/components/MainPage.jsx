@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MainNavbar } from './elements/MainNavbar';
 import { MovieCards } from './MovieCards';
 import { fetchMovies } from '../api/moviedbAPI';
@@ -46,8 +46,8 @@ export const MainPage = () => {
                 />
                 <div className={styles.container}>
                     <Routes>
-                        <Route path="/" element={<MovieCards movieData={movieData} status={status} />} />
-                        <Route path="/movies/:movieGenre" element={<MovieCards movieData={movieData} status={status} />} />
+                        <Route exact path="/" element={<MovieCards movieData={movieData} status={status} />} />
+                        <Route exact path="/:movieGenre" element={<MovieCards movieData={movieData} status={status} />} />
                     </Routes>
                 </div>
                 <div>

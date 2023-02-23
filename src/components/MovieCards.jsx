@@ -13,7 +13,7 @@ export const MovieCards = ({ movieData, status }) => {
             return (
                 movieData.map((movie) => {
                     return (
-                        <Link key={movie.id} className={styles.Link} to={`/movies/${movie.id}`}>
+                        <Link key={movie.id} className={styles.Link} to={`/${movie.id}`}>
                             <MovieCard
                                 key={movie.id}
                                 title={movie.title}
