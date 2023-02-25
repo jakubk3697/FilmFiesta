@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 
 export const MovieCards = ({ movieData, status }) => {
     const { data } = useQuery(['genres'], fetchGenres);
-    console.log(data);
 
     switch (status) {
         case 'error':
