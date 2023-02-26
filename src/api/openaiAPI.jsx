@@ -18,7 +18,6 @@ export const getMoviesByAI = async ({ userPrompt }) => {
 
     try {
         const response = await axios.post('https://api.openai.com/v1/completions', data, { headers });
-        console.log('response', response);
         const text = response.data.choices[0].text.trim();
         return text;
     } catch (error) {
