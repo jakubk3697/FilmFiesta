@@ -1,0 +1,31 @@
+// make mixn
+@mixin mainNavButton() {
+    display: block;
+    position: relative;
+    margin: 0 1rem;
+    padding: 1.2rem 1.6rem;
+    white-space: nowrap;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.4rem;
+    cursor: pointer;
+
+    &::before {
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+        transition: .2s;
+        border-radius: 25px;
+    }
+}
+
+@mixin activeNavLink() {
+    background: linear-gradient(to bottom, #e8edec, #d2d1d3);
+    box-shadow: 0px 3px 20px 0px black;
+    transform: scale(1.2);
+}

@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { MainNavbar } from './elements/MainNavbar';
-import { MovieCards } from './MovieCards';
-import { fetchMovies } from '../api/moviedbAPI';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Route, Routes } from 'react-router-dom';
+import { MainNavbar } from './MainNavbar';
+import { MovieCards } from './MovieCards';
 import { RandomQuestions } from './RandomQuestions';
-import styles from '../assets/styles/MainContent.module.scss'
+import { fetchMovies } from '../api/moviedbAPI';
+import { getMoviesByAI } from '../api/openAIAPI';
+import styles from '../assets/styles/MainContent.module.scss';
+
 
 export const MainContent = ({ type }) => {
-    const [movieType, setMovieType] = useState( 'popular');
+    const [movieType, setMovieType] = useState('popular');
+    const [prompt, setPrompt] = useState('');
+    const [response, setResponse] = useState('');
 
     // Initial fetch strucutre with page 1
     const fetchProjects = async ({ pageParam = 1 }) => {
@@ -31,12 +35,24 @@ export const MainContent = ({ type }) => {
         setMovieType(type)
     }
 
+    const handleAISeachbarChange = (event) => {
+        setPrompt(event.target.value);
+    }
+
+    const handleAISeachbarSubmit = async (event) => {
+        event.preventDefault();
+
+        const response = await getMoviesByAI({ userPrompt: prompt });
+        setResponse(response);
+        setPrompt('');
+    }
+
     const movieData = data ? data.pages.flatMap((page) => page.results) : [];
 
     return (
         <>
-            <RandomQuestions />
             <main className={styles.main}>
+                <RandomQuestions />
                 <MainNavbar
                     links={[
                         { title: "Popular", url: "popular", onClick: () => handleMovieTypeClick('popular') },
@@ -44,6 +60,9 @@ export const MainContent = ({ type }) => {
                         { title: "Now Playing", url: "now_playing", onClick: () => handleMovieTypeClick('now_playing') },
                         { title: "Upcoming", url: "upcoming", onClick: () => handleMovieTypeClick('upcoming') },
                     ]}
+                    onSubmit={handleAISeachbarSubmit}
+                    onChange={handleAISeachbarChange}
+                    value={prompt}
                 />
                 <div className={styles.container}>
                     <MovieCards movieData={movieData} status={status} />
@@ -61,7 +80,6 @@ export const MainContent = ({ type }) => {
                                 : 'Nothing more to load'}
                     </button>
                 </div>
-
             </main>
         </>
     )
