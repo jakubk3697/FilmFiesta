@@ -5,7 +5,7 @@ import { MainNavbar } from './MainNavbar';
 import { MovieCards } from './MovieCards';
 import { RandomQuestions } from './RandomQuestions';
 import { fetchMovies } from '../api/moviedbAPI';
-import { getMoviesByAI } from '../api/openAIAPI';
+import { getMoviesByAI } from '../api/openaiAPI';
 import styles from '../assets/styles/MainContent.module.scss';
 
 
