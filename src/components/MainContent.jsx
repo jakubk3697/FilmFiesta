@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { MainNavbar } from './elements/MainNavbar';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { MainNavbar } from './MainNavbar';
 import { MovieCards } from './MovieCards';
 import { fetchMovies } from '../api/moviedbAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Route, Routes } from 'react-router-dom';
 import { RandomQuestions } from './RandomQuestions';
 import styles from '../assets/styles/MainContent.module.scss';
-import axios from 'axios';
 
 
 export const MainContent = ({ type }) => {
@@ -39,34 +39,12 @@ export const MainContent = ({ type }) => {
         }
     }
 
-
     // Initial fetch strucutre with page 1
     const fetchProjects = async ({ pageParam = 1 }) => {
         const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
         return response;
     }
 
-    async function onSubmit(event) {
-        event.preventDefault();
-        try {
-            const response = await fetch("/api/generate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ animal: animalInput }),
-            });
-
-            const data = await response.json();
-            if (response.status !== 200) {
-                throw data.error || new Error(`Request failed with status ${response.status}`);
-            }
-            setResponse(text);
-        } catch (error) {
-            console.error(error);
-            alert(error.message);
-        }
-    }
     const {
         data,
         error,
@@ -82,23 +60,20 @@ export const MainContent = ({ type }) => {
         setMovieType(type)
     }
 
+    const handleAISeachbarSubmit = (event) => {
+        event.preventDefault();
+    }
+
+    const handleAISeachbarChange = (event) => {
+        setPrompt(event.target.value);
+    }
+
     const movieData = data ? data.pages.flatMap((page) => page.results) : [];
 
     return (
         <>
-            <RandomQuestions />
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Prompt:
-                        <input type="text" value={prompt} onChange={(event) => setPrompt(event.target.value)} />
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
-                <p>{response}</p>
-            </div>
-
             <main className={styles.main}>
+                <RandomQuestions />
                 <MainNavbar
                     links={[
                         { title: "Popular", url: "popular", onClick: () => handleMovieTypeClick('popular') },
@@ -106,6 +81,9 @@ export const MainContent = ({ type }) => {
                         { title: "Now Playing", url: "now_playing", onClick: () => handleMovieTypeClick('now_playing') },
                         { title: "Upcoming", url: "upcoming", onClick: () => handleMovieTypeClick('upcoming') },
                     ]}
+                    onSubmit={handleAISeachbarSubmit}
+                    onChange={handleAISeachbarChange}
+                    value={prompt}
                 />
                 <div className={styles.container}>
                     <MovieCards movieData={movieData} status={status} />
@@ -123,7 +101,6 @@ export const MainContent = ({ type }) => {
                                 : 'Nothing more to load'}
                     </button>
                 </div>
-
             </main>
         </>
     )

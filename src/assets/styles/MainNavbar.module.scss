@@ -1,0 +1,46 @@
+@import './mixins.scss';
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 10rem;
+    background-color: rgba(0, 0, 0, .4);
+    backdrop-filter: blur(10px);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.ul {
+    display: inline-flex;
+    margin-right: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: fit-content;
+    list-style: none;
+
+    .navlink {
+        @include mainNavButton;
+
+        &:hover {
+            color: #000;
+
+            &::before {
+                @include activeNavLink;
+            }
+        }
+    }
+
+    .active {
+        @include activeNavLink;
+        transform: scale(1);
+        color: #000;
+        border-radius: 2.5rem;
+    }
+}
+
+@media (min-width: 560px) {
+    .ul {
+        justify-content: normal;
+    }
+}
