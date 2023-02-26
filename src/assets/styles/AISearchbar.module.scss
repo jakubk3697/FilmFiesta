@@ -3,26 +3,25 @@
 .aiBox {
     display: flex;
     align-items: center;
-    justify-content: end;
-    // margin-right: 1.5rem;
-    width: 50%;
+    width: 100%;
+    padding-top: 1rem;
 }
 
 .form {
     display: flex;
-    // flex-wrap: wrap;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     width: 100%;
 }
 
 .input {
-    border-radius: 5px;
-    font-size: 1.4rem;
-    border: none;
-    padding: .8rem;
-    // margin-right: 0.5rem;
     width: 100%;
+    padding: .8rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    border: none;
     background: linear-gradient(to bottom, #fffefe, #d9d8da);
 }
 
@@ -30,6 +29,7 @@
     @include mainNavButton;
     background-color: transparent;
     border: none;
+    letter-spacing: 2px;
 
     &:hover {
         color: #000;

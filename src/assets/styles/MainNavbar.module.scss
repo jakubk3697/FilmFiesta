@@ -2,22 +2,25 @@
 
 .nav {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
     margin-top: 10rem;
     background-color: rgba(0, 0, 0, .4);
     backdrop-filter: blur(10px);
     border: 1px solid #ddd;
     border-radius: 10px;
+    padding: 1rem;
 }
 
 .ul {
-    display: inline-flex;
-    margin-right: auto;
-    flex-wrap: wrap;
+    display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     height: fit-content;
     list-style: none;
+    border-bottom: 1px solid #9d9d9d;
+    padding-bottom: 2rem;
+    width: 100%;
 
     .navlink {
         @include mainNavButton;
@@ -41,6 +44,6 @@
 
 @media (min-width: 560px) {
     .ul {
-        justify-content: normal;
+        // justify-content: normal;
     }
 }
