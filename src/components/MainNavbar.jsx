@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import styles from '../../assets/styles/elements/MainNavbar.module.scss';
+import styles from '../assets/styles/MainNavbar.module.scss';
+import { AISearchbar } from './AISearchbar';
 
-export const MainNavbar = ({ links }) => {
+export const MainNavbar = ({ links, onSubmit, onChange, value }) => {
     return (
         <nav className={styles.nav}>
             <ul className={styles.ul}>
@@ -19,6 +20,7 @@ export const MainNavbar = ({ links }) => {
                     </li>
                 ))}
             </ul>
+            <AISearchbar onSubmit={onSubmit} onChange={onChange} value={value} />
         </nav>
     );
 };

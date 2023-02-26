@@ -1,0 +1,42 @@
+@import './mixins.scss';
+
+.aiBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+.input {
+    width: 100%;
+    padding: .8rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    border: none;
+    background: linear-gradient(to bottom, #fffefe, #d9d8da);
+}
+
+.submitBtn {
+    @include mainNavButton;
+    background-color: transparent;
+    border: none;
+    letter-spacing: 2px;
+
+    &:hover {
+        color: #000;
+
+        &::before {
+            @include activeNavLink;
+        }
+    }
+}
