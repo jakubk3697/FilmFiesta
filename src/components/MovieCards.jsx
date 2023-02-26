@@ -24,7 +24,7 @@ export const MovieCards = ({ movieData, status }) => {
                                 imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
                                 imgAlt={movie.title}
                                 genres={movie.genre_ids.map((genre) => {
-                                    return data.genres.find((genreData) => genreData.id === genre).name + ' ';
+                                    return data.genres.find((genreData) => genreData.id === genre).name + ', ';
                                 })}
                                 rating={movie.vote_average}
                             />

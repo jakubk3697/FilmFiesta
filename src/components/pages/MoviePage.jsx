@@ -8,7 +8,7 @@ export const MoviePage = () => {
 
     return (
         <>
-            <h1 className={styles.h1}>Page with movie with "ID: {movieId}"</h1>
+            <h1 className={styles.h1}>Movie page with "ID: {movieId}"</h1>
         </>
     )
 }
