@@ -8,6 +8,11 @@ import { useQuery } from '@tanstack/react-query';
 export const MovieCards = ({ movieData, status }) => {
     const { data } = useQuery(['genres'], fetchGenres);
 
+    // Variable with IDs to help filter duplicated movies
+    let movieIDs = [];
+
+    console.log(movieIDs);
+
     switch (status) {
         case 'error':
             return console.error(error)
@@ -16,11 +21,13 @@ export const MovieCards = ({ movieData, status }) => {
         case 'success':
             return (
                 movieData.map((movie) => {
+                    if (movieIDs.includes(movie.id)) return;
                     return (
+                        console.log(movieIDs),
                         <Link key={movie.id} className={styles.Link} to={`/movie/${movie.id}`}>
                             <MovieCard
-                                key={movie.id}
-                                title={movie.title}
+                                key={movie.id && movieIDs.push(movie.id)}
+                                title={movie.id}
                                 imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
                                 imgAlt={movie.title}
                                 genres={movie.genre_ids.map((genre) => {
