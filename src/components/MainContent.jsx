@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { MainNavbar } from './MainNavbar';
@@ -9,10 +9,12 @@ import { getMoviesByAI } from '../api/openaiAPI';
 import styles from '../assets/styles/MainContent.module.scss';
 
 
-export const MainContent = ({ type }) => {
+export const MainContent = () => {
+    const [movies, setMovies] = useState([]);
+    const [actualMovies, setActualMovies] = useState([]);
     const [movieType, setMovieType] = useState('popular');
     const [prompt, setPrompt] = useState('');
-    const [response, setResponse] = useState('');
+    const promptRef = useRef();
 
     // Initial fetch strucutre with page 1
     const fetchProjects = async ({ pageParam = 1 }) => {
@@ -41,10 +43,8 @@ export const MainContent = ({ type }) => {
 
     const handleAISeachbarSubmit = async (event) => {
         event.preventDefault();
-
         const response = await getMoviesByAI({ userPrompt: prompt });
-        setResponse(response);
-        setPrompt('');
+        console.log(response);
     }
 
     const movieData = data ? data.pages.flatMap((page) => page.results) : [];
@@ -61,8 +61,7 @@ export const MainContent = ({ type }) => {
                         { title: "Upcoming", url: "upcoming", onClick: () => handleMovieTypeClick('upcoming') },
                     ]}
                     onSubmit={handleAISeachbarSubmit}
-                    onChange={handleAISeachbarChange}
-                    value={prompt}
+                    aiPromptRef={promptRef.current}
                 />
                 <div className={styles.container}>
                     <MovieCards movieData={movieData} status={status} />
