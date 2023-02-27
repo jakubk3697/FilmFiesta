@@ -27,7 +27,7 @@ export const MovieCards = ({ movieData, status }) => {
                         <Link key={movie.id} className={styles.Link} to={`/movie/${movie.id}`}>
                             <MovieCard
                                 key={movie.id && movieIDs.push(movie.id)}
-                                title={movie.id}
+                                title={movie.title}
                                 imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
                                 imgAlt={movie.title}
                                 genres={movie.genre_ids.map((genre) => {
