@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { MainNavbar } from './MainNavbar';
 import { MovieCards } from './MovieCards';
 import { RandomQuestions } from './RandomQuestions';
@@ -9,14 +9,15 @@ import { getMoviesByAI } from '../api/openaiAPI';
 import styles from '../assets/styles/MainContent.module.scss';
 
 
-export const MainContent = ({ type }) => {
+export const MainContent = () => {
+    // const [movies, setMovies] = useState([]);
+    // const [actualMovies, setActualMovies] = useState([]);
     const [movieType, setMovieType] = useState('popular');
     const [prompt, setPrompt] = useState('');
-    const [response, setResponse] = useState('');
+    const promptRef = useRef(null);
 
     // Initial fetch strucutre with page 1
     const fetchProjects = async ({ pageParam = 1 }) => {
-        console.log('fetching page: ', pageParam);
         const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
         return response;
     }
@@ -32,20 +33,22 @@ export const MainContent = ({ type }) => {
         getNextPageParam: (lastPage) => lastPage.page + 1,
     });
 
+    const {
+        data: aiData,
+        error: aiError,
+        status: aiStatus,
+    } = useQuery(['aiMovies', { prompt }], getMoviesByAI, {
+        enabled: prompt !== '',
+    });
+
     const handleMovieTypeClick = (type) => {
         setMovieType(type)
     }
 
-    const handleAISeachbarChange = (event) => {
-        setPrompt(event.target.value);
-    }
-
-    const handleAISeachbarSubmit = async (event) => {
-        event.preventDefault();
-
-        const response = await getMoviesByAI({ userPrompt: prompt });
-        setResponse(response);
-        setPrompt('');
+    const handleAISeachbarSubmit = (event) => {
+        console.log('submit');
+        // event.preventDefault();
+        setPrompt(promptRef.current.value);
     }
 
     const movieData = data ? data.pages.flatMap((page) => page.results) : [];
@@ -62,8 +65,7 @@ export const MainContent = ({ type }) => {
                         { title: "Upcoming", url: "upcoming", onClick: () => handleMovieTypeClick('upcoming') },
                     ]}
                     onSubmit={handleAISeachbarSubmit}
-                    onChange={handleAISeachbarChange}
-                    value={prompt}
+                    aiPromptRef={promptRef}
                 />
                 <div className={styles.container}>
                     <MovieCards movieData={movieData} status={status} />
