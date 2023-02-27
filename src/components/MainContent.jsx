@@ -16,7 +16,6 @@ export const MainContent = ({ type }) => {
 
     // Initial fetch strucutre with page 1
     const fetchProjects = async ({ pageParam = 1 }) => {
-        console.log('fetching page: ', pageParam);
         const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
         return response;
     }
