@@ -11,8 +11,6 @@ export const MovieCards = ({ movieData, status }) => {
     // Variable with IDs to help filter duplicated movies
     let movieIDs = [];
 
-    console.log(movieIDs);
-
     switch (status) {
         case 'error':
             return console.error(error)
@@ -23,7 +21,6 @@ export const MovieCards = ({ movieData, status }) => {
                 movieData.map((movie) => {
                     if (movieIDs.includes(movie.id)) return;
                     return (
-                        console.log(movieIDs),
                         <Link key={movie.id} className={styles.Link} to={`/movie/${movie.id}`}>
                             <MovieCard
                                 key={movie.id && movieIDs.push(movie.id)}
