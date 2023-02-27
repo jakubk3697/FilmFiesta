@@ -6,7 +6,11 @@ export const AISearchbar = ({ onSubmit, aiPromptRef }) => {
         <div className={styles.aiBox}>
             <form className={styles.form} onSubmit={onSubmit}>
                 <input className={styles.input} placeholder="Give some tips and get matched movies..." type="text" ref={aiPromptRef} />
-                <button className={styles.submitBtn} type="submit">Match movies</button>
+                {/* let below function to change route and submit form */}
+                
+                <Link to={'/movies/ai'}>
+                    <button className={styles.submitBtn} type="submit">Match movies</button>
+                </Link>
             </form>
         </div>
     )
