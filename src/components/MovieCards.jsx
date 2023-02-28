@@ -25,7 +25,7 @@ export const MovieCards = ({ movieData, status }) => {
                             <MovieCard
                                 key={movie.id && movieIDs.push(movie.id)}
                                 title={movie.title}
-                                imgSrc={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "https://via.placeholder.com/500x750"}
+                                imgSrc={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                 imgAlt={movie.title}
                                 genres={movie.genre_ids.map((genre) => {
                                     return data.genres.find((genreData) => genreData.id === genre).name + ', ';

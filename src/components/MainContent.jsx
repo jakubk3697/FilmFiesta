@@ -8,10 +8,7 @@ import { fetchMovies } from '../api/moviedbAPI';
 import { getMoviesByAI } from '../api/openaiAPI';
 import styles from '../assets/styles/MainContent.module.scss';
 
-
 export const MainContent = () => {
-    // const [movies, setMovies] = useState([]);
-    // const [actualMovies, setActualMovies] = useState([]);
     const [movieType, setMovieType] = useState('popular');
     const [prompt, setPrompt] = useState('');
     const promptRef = useRef(null);
@@ -29,16 +26,19 @@ export const MainContent = () => {
         hasNextPage,
         isFetchingNextPage,
         status,
+        isPending,
     } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchProjects, {
         getNextPageParam: (lastPage) => lastPage.page + 1,
+        enabled: movieType !== 'ai',
     });
 
     const {
         data: aiData,
         error: aiError,
         status: aiStatus,
+        isFetching: aiIsFetching,
     } = useQuery(['aiMovies', { prompt }], getMoviesByAI, {
-        enabled: prompt !== '',
+        enabled: movieType === 'ai',
     });
 
     const handleMovieTypeClick = (type) => {
@@ -46,12 +46,14 @@ export const MainContent = () => {
     }
 
     const handleAISeachbarSubmit = (event) => {
-        console.log('submit');
-        // event.preventDefault();
+        console.log('ai button not disabled');
         setPrompt(promptRef.current.value);
+        setMovieType('ai'); // Disable movieType query
+        promptRef.current.value = '';
     }
 
     const movieData = data ? data.pages.flatMap((page) => page.results) : [];
+    const aiMovieData = aiData ? aiData : [];
 
     return (
         <>
@@ -66,9 +68,12 @@ export const MainContent = () => {
                     ]}
                     onSubmit={handleAISeachbarSubmit}
                     aiPromptRef={promptRef}
+                    matchBtnDisabled={aiIsFetching}
                 />
                 <div className={styles.container}>
-                    <MovieCards movieData={movieData} status={status} />
+                    {
+                        (movieType === 'ai' ? <MovieCards movieData={aiData} status={aiStatus} /> : <MovieCards movieData={movieData} status={status} />)
+                    }
                 </div>
                 <div>
                     <button
