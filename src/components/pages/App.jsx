@@ -5,7 +5,6 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 import { useState, useEffect } from 'react';
 import styles from '../../assets/styles/pages/App.module.scss';
 import { Outlet } from 'react-router-dom';
-import { MainContent } from '../MainContent';
 
 const App = () => {
   const [theme, setTheme] = useState('dark');
