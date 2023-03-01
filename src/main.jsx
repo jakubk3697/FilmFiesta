@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <MainContent type={'popular'} /> },
+      { index: true, element: <MainContent /> },
       {
         path: 'movies/:movieGenre',
         element: <MainContent />,
@@ -35,8 +35,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router}>
-        <ReactQueryDevtools />
       </RouterProvider>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </React.StrictMode>,
 )

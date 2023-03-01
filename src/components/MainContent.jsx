@@ -1,53 +1,80 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { MainNavbar } from './MainNavbar';
 import { MovieCards } from './MovieCards';
 import { RandomQuestions } from './RandomQuestions';
 import { fetchMovies } from '../api/moviedbAPI';
 import { getMoviesByAI } from '../api/openaiAPI';
+import { useLocation, useNavigate } from 'react-router-dom'
 import styles from '../assets/styles/MainContent.module.scss';
 
-
-export const MainContent = ({ type }) => {
+export const MainContent = () => {
     const [movieType, setMovieType] = useState('popular');
     const [prompt, setPrompt] = useState('');
-    const [response, setResponse] = useState('');
+    const promptRef = useRef(null);
+    const currentPath = useLocation();
 
-    // Initial fetch strucutre with page 1
-    const fetchProjects = async ({ pageParam = 1 }) => {
+    const pathnameToMovieType = {
+        'movies/popular': 'popular',
+        'movies/top_rated': 'top_rated',
+        'movies/now_playing': 'now_playing',
+        'movies/upcoming': 'upcoming',
+        'movies/ai': 'ai',
+    };
+
+    useEffect(() => {
+        const movieType = Object.keys(pathnameToMovieType).find((pathname) =>
+            window.location.pathname.includes(pathname)
+        );
+        movieType ? setMovieType(pathnameToMovieType[movieType]) : setMovieType('popular');
+    }, [currentPath]);
+
+    // Initial fetch strucutre with page 1 and movieType from state
+    const fetchMoviedbMovies = async ({ pageParam = 1 }) => {
         const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
+        return response;
+    }
+
+    const fetchAIMovies = async () => {
+        const response = await getMoviesByAI({ queryKey: ['aiMovies', { prompt }] });
         return response;
     }
 
     const {
         data,
-        error,
-        fetchNextPage,
+        isError,
         hasNextPage,
+        isFetching,
+        isSuccess,
+        fetchNextPage,
         isFetchingNextPage,
-        status,
-    } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchProjects, {
+    } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchMoviedbMovies, {
         getNextPageParam: (lastPage) => lastPage.page + 1,
+        enabled: movieType !== 'ai',
+    });
+
+    const {
+        data: aiData,
+        isError: aiIsError,
+        isSuccess: aiIsSuccess,
+        isFetching: aiIsFetching,
+    } = useQuery(['aiMovies', { prompt }], fetchAIMovies, {
+        enabled: movieType === 'ai' && prompt.length > 5,
     });
 
     const handleMovieTypeClick = (type) => {
         setMovieType(type)
     }
 
-    const handleAISeachbarChange = (event) => {
-        setPrompt(event.target.value);
-    }
-
-    const handleAISeachbarSubmit = async (event) => {
-        event.preventDefault();
-
-        const response = await getMoviesByAI({ userPrompt: prompt });
-        setResponse(response);
-        setPrompt('');
+    const handleAISeachbarSubmit = (event) => {
+        setPrompt(promptRef.current.value);
+        setMovieType('ai'); // Disable movieType query
+        promptRef.current.value = '';
     }
 
     const movieData = data ? data.pages.flatMap((page) => page.results) : [];
+    const aiMovieData = aiData ? aiData : [];
 
     return (
         <>
@@ -61,11 +88,27 @@ export const MainContent = ({ type }) => {
                         { title: "Upcoming", url: "upcoming", onClick: () => handleMovieTypeClick('upcoming') },
                     ]}
                     onSubmit={handleAISeachbarSubmit}
-                    onChange={handleAISeachbarChange}
-                    value={prompt}
+                    aiPromptRef={promptRef}
+                    matchBtnDisabled={aiIsFetching}
                 />
                 <div className={styles.container}>
-                    <MovieCards movieData={movieData} status={status} />
+                    {
+                        (movieType === 'ai' ?
+                            <MovieCards
+                                movieData={aiData}
+                                isFetching={aiIsFetching}
+                                isError={aiIsError}
+                                isSuccess={aiIsSuccess}
+                            />
+                            :
+                            <MovieCards
+                                movieData={movieData}
+                                isFetching={isFetching}
+                                isError={isError}
+                                isSuccess={isSuccess}
+                            />
+                        )
+                    }
                 </div>
                 <div>
                     <button
