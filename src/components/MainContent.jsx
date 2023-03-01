@@ -43,12 +43,12 @@ export const MainContent = () => {
 
     const {
         data,
-        error,
-        fetchNextPage,
+        isError,
         hasNextPage,
+        isFetching,
+        isSuccess,
+        fetchNextPage,
         isFetchingNextPage,
-        status,
-        isPending,
     } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchMoviedbMovies, {
         getNextPageParam: (lastPage) => lastPage.page + 1,
         enabled: movieType !== 'ai',
@@ -56,8 +56,8 @@ export const MainContent = () => {
 
     const {
         data: aiData,
-        error: aiError,
-        status: aiStatus,
+        isError: aiIsError,
+        isSuccess: aiIsSuccess,
         isFetching: aiIsFetching,
     } = useQuery(['aiMovies', { prompt }], fetchAIMovies, {
         enabled: movieType === 'ai' && prompt.length > 5,
@@ -93,7 +93,21 @@ export const MainContent = () => {
                 />
                 <div className={styles.container}>
                     {
-                        (movieType === 'ai' ? <MovieCards movieData={aiData} status={aiStatus} /> : <MovieCards movieData={movieData} status={status} />)
+                        (movieType === 'ai' ?
+                            <MovieCards
+                                movieData={aiData}
+                                isFetching={aiIsFetching}
+                                isError={aiIsError}
+                                isSuccess={aiIsSuccess}
+                            />
+                            :
+                            <MovieCards
+                                movieData={movieData}
+                                isFetching={isFetching}
+                                isError={isError}
+                                isSuccess={isSuccess}
+                            />
+                        )
                     }
                 </div>
                 <div>
