@@ -12,6 +12,7 @@ import styles from '../assets/styles/MainContent.module.scss';
 export const MainContent = () => {
     const [movieType, setMovieType] = useState('popular');
     const [prompt, setPrompt] = useState('');
+    const [isInputErr, setIsInputErr] = useState(false);
     const promptRef = useRef(null);
     const currentPath = useLocation();
 
@@ -44,9 +45,9 @@ export const MainContent = () => {
     const {
         data,
         isError,
-        hasNextPage,
         isFetching,
         isSuccess,
+        hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchMoviedbMovies, {
@@ -60,7 +61,7 @@ export const MainContent = () => {
         isSuccess: aiIsSuccess,
         isFetching: aiIsFetching,
     } = useQuery(['aiMovies', { prompt }], fetchAIMovies, {
-        enabled: movieType === 'ai' && prompt.length > 5,
+        enabled: movieType === 'ai' && prompt.length > 6,
     });
 
     const handleMovieTypeClick = (type) => {
@@ -70,6 +71,7 @@ export const MainContent = () => {
     const handleAISeachbarSubmit = (event) => {
         setPrompt(promptRef.current.value);
         setMovieType('ai'); // Disable movieType query
+        setIsInputErr(promptRef.current.value.length < 6)
         promptRef.current.value = '';
     }
 
@@ -90,6 +92,7 @@ export const MainContent = () => {
                     onSubmit={handleAISeachbarSubmit}
                     aiPromptRef={promptRef}
                     matchBtnDisabled={aiIsFetching}
+                    isInputErr={isInputErr}
                 />
                 <div className={styles.container}>
                     {

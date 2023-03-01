@@ -13,6 +13,13 @@ export const fetchMovies = async ({ queryKey }) => {
     return data;
 };
 
+export const fetchMovieByID = async (movieId) => {
+    const url = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`;
+    const { data } = await axios.get(url);
+
+    return data;
+}
+
 export const fetchGenres = async () => {
     const { data } = await axios.get(API_ACTUAL_GENRES);
 
