@@ -15,31 +15,29 @@ export const MainContent = () => {
     const promptRef = useRef(null);
     const currentPath = useLocation();
 
+    const pathnameToMovieType = {
+        'movies/popular': 'popular',
+        'movies/top_rated': 'top_rated',
+        'movies/now_playing': 'now_playing',
+        'movies/upcoming': 'upcoming',
+        'movies/ai': 'ai',
+    };
+
     useEffect(() => {
-        const path = window.location.pathname;
-        console.log('useEffect rerendered');
-        switch (path) {
-            case '/movies/popular':
-                setMovieType('popular');
-                break;
-            case '/movies/top_rated':
-                setMovieType('top_rated');
-                break;
-            case '/movies/now_playing':
-                setMovieType('now_playing');
-                break;
-            case '/movies/upcoming':
-                setMovieType('upcoming');
-                break;
-            default:
-                setMovieType('popular');
-                break;
-        }
+        const movieType = Object.keys(pathnameToMovieType).find((pathname) =>
+            window.location.pathname.includes(pathname)
+        );
+        movieType ? setMovieType(pathnameToMovieType[movieType]) : setMovieType('popular');
     }, [currentPath]);
 
     // Initial fetch strucutre with page 1 and movieType from state
-    const fetchProjects = async ({ pageParam = 1 }) => {
+    const fetchMoviedbMovies = async ({ pageParam = 1 }) => {
         const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
+        return response;
+    }
+
+    const fetchAIMovies = async () => {
+        const response = await getMoviesByAI({ queryKey: ['aiMovies', { prompt }] });
         return response;
     }
 
@@ -51,7 +49,7 @@ export const MainContent = () => {
         isFetchingNextPage,
         status,
         isPending,
-    } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchProjects, {
+    } = useInfiniteQuery(['movies', { page: 1, movieType }], fetchMoviedbMovies, {
         getNextPageParam: (lastPage) => lastPage.page + 1,
         enabled: movieType !== 'ai',
     });
@@ -61,8 +59,8 @@ export const MainContent = () => {
         error: aiError,
         status: aiStatus,
         isFetching: aiIsFetching,
-    } = useQuery(['aiMovies', { prompt }], getMoviesByAI, {
-        enabled: movieType === 'ai',
+    } = useQuery(['aiMovies', { prompt }], fetchAIMovies, {
+        enabled: movieType === 'ai' && prompt.length > 5,
     });
 
     const handleMovieTypeClick = (type) => {
