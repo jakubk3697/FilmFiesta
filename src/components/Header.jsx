@@ -5,9 +5,18 @@ import styles from '../assets/styles/Header.module.scss';
 import { Link } from 'react-router-dom';
 
 export const Header = ({ handleTheme }) => {
+
+    const handleScroll = (e) => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
     return (
         <header className={styles.header}>
-            <Link className={styles.Link} to={'/'}>
+            {/* scroll to the top after onClick Link*/}
+            <Link className={styles.Link} to={'/'} onClick={handleScroll}>
                 <div className={styles.leftAreaBox}>
                     <BiCameraMovie className={styles.logoIcon} />
                     <h1 className={styles.logoText}>FilmFiesta</h1>

@@ -1,7 +1,65 @@
-.h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 2rem;
+.container {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    color: white;
+    min-height: 100vh;
+
+    .movie {
+        display: flex;
+        flex-direction: row;
+        padding: 40px;
+
+        .poster {
+            margin-right: 40px;
+
+            img {
+                max-width: 400px;
+            }
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .title {
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+
+            .overview {
+                margin-bottom: 40px;
+                font-size: 1.5rem;
+                line-height: 1.5;
+            }
+
+            .details {
+                display: flex;
+                flex-direction: column;
+
+                .detail {
+                    display: flex;
+                    margin-bottom: 10px;
+                }
+
+                .detailTitle {
+                    font-weight: bold;
+                    margin-right: 10px;
+                }
+
+                .detailValue {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                .detailValueItem {
+                    margin-right: 20px;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
 }
