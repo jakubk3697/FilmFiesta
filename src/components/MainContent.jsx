@@ -6,14 +6,38 @@ import { MovieCards } from './MovieCards';
 import { RandomQuestions } from './RandomQuestions';
 import { fetchMovies } from '../api/moviedbAPI';
 import { getMoviesByAI } from '../api/openaiAPI';
+import { useLocation, useNavigate } from 'react-router-dom'
 import styles from '../assets/styles/MainContent.module.scss';
 
 export const MainContent = () => {
     const [movieType, setMovieType] = useState('popular');
     const [prompt, setPrompt] = useState('');
     const promptRef = useRef(null);
+    const currentPath = useLocation();
 
-    // Initial fetch strucutre with page 1
+    useEffect(() => {
+        const path = window.location.pathname;
+        console.log('useEffect rerendered');
+        switch (path) {
+            case '/movies/popular':
+                setMovieType('popular');
+                break;
+            case '/movies/top_rated':
+                setMovieType('top_rated');
+                break;
+            case '/movies/now_playing':
+                setMovieType('now_playing');
+                break;
+            case '/movies/upcoming':
+                setMovieType('upcoming');
+                break;
+            default:
+                setMovieType('popular');
+                break;
+        }
+    }, [currentPath]);
+
+    // Initial fetch strucutre with page 1 and movieType from state
     const fetchProjects = async ({ pageParam = 1 }) => {
         const response = await fetchMovies({ queryKey: ['movies', { page: pageParam, movieType }] });
         return response;
@@ -46,7 +70,6 @@ export const MainContent = () => {
     }
 
     const handleAISeachbarSubmit = (event) => {
-        console.log('ai button not disabled');
         setPrompt(promptRef.current.value);
         setMovieType('ai'); // Disable movieType query
         promptRef.current.value = '';
