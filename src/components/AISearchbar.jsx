@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../assets/styles/AISearchbar.module.scss';
 
-export const AISearchbar = ({ onSubmit, aiPromptRef, matchBtnDisabled }) => {
+export const AISearchbar = ({ onSubmit, aiPromptRef, matchBtnDisabled, isInputErr }) => {
     let navigateTo = useNavigate();
 
     const handleClick = (event) => {
@@ -11,22 +11,25 @@ export const AISearchbar = ({ onSubmit, aiPromptRef, matchBtnDisabled }) => {
     }
 
     return (
-        <div className={styles.aiBox}>
-            <form className={styles.form} onSubmit={onSubmit} method={'post'}>
-                <input
-                    className={styles.input}
-                    placeholder="Give some tips and get matched movies..."
-                    type="text" ref={aiPromptRef}
-                />
-                <button
-                    className={styles.submitBtn}
-                    type="submit"
-                    onClick={handleClick}
-                    disabled={matchBtnDisabled}
-                >
-                    Match movies
-                </button>
-            </form>
-        </div>
+        <>
+            <div className={styles.aiBox}>
+                <form className={styles.form} onSubmit={onSubmit} method={'post'}>
+                    <input
+                        className={styles.input}
+                        placeholder="Give some tips and get matched movies..."
+                        type="text" ref={aiPromptRef}
+                    />
+                    <button
+                        className={styles.submitBtn}
+                        type="submit"
+                        onClick={handleClick}
+                        disabled={matchBtnDisabled}
+                    >
+                        Match movies
+                    </button>
+                </form>
+            </div>
+            <p className={isInputErr ? styles.visibleErr : styles.err}>Please, provide more information.</p>
+        </>
     )
 }
