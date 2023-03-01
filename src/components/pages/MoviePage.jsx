@@ -69,7 +69,7 @@ export const MoviePage = () => {
                                 </div>
                                 <div className={styles.detail}>
                                     <span className={styles.detailTitle}>Rating:</span>
-                                    <div className={styles.detailValue}>{data.vote_average}/10</div>
+                                    <div className={styles.detailValue}>{(data.vote_average).toFixed(1)}/10</div>
                                 </div>
                             </div>
                         </div>
